@@ -1,0 +1,13 @@
+{
+  "name": "workshop",
+  "version": "1.0.0",
+  "description": "About all presentation for workshop",
+  "main": "index.html",
+  "repository": "git@github.com:laupiFrpar/workshop.git",
+  "author": "Pierre-Louis Launay <laupi.frpar@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "reveal.js": "^3.6.0"
+  }
+}
