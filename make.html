@@ -1,0 +1,226 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css" />
+        <link rel="stylesheet" href="node_modules/reveal.js/css/theme/solarized.css" />
+        <link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css" />
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section data-markdown>
+                    ## Make
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Tous les jours nous executons des mêmes tâches tous les jours
+                        <pre><code class="hljs shell" data-trim data-noescape>
+                            <span>$ composer install</span>
+                            <span>$ git checkout &lt;branch_name&gt;</span><!-- .element: class="fragment fade-in" -->
+                            <span>$ rm -rf app/cache/*</span><!-- .element: class="fragment fade-in" -->
+                            <span>$ bin/codecept run</span><!-- .element: class="fragment fade-in" -->
+                            <span>$ npm install && npm run-script build</span><!-- .element: class="fragment fade-in" -->
+                            <span>$ app/console assetic:dump</span><!-- .element: class="fragment fade-in" -->
+                            <span>$ app/console doctrine:migrations:migrate</span><!-- .element: class="fragment fade-in" -->
+                        </code></pre><!-- .element: class="fragment fade-in" -->
+                        <span>Et d'autres...</span><!-- .element: class="fragment fade-in" -->
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Qu'est ce que c'est Make ?
+                        <ul>
+                        	<li>C'est un outil d'automatisation crée en 1976</li><!-- .element: class="fragment fade-in" -->
+                        	<li>Conçu pour résoudre le problème de dépendance du processus de compilation / installation</li><!-- .element: class="fragment fade-in" -->
+                        	<li>À l'origine, il est utilisé pour compiler les fichiers source comme le langage C</li><!-- .element: class="fragment fade-in" -->
+                        </ul>
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Comment ça marche
+                        <pre><code class="hljs makefile" data-trim data-noescape>
+                            cible: [prérequis]
+                                [recette]
+                                [...]
+                        </code></pre>
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        <pre><code class="hljs makefile" data-trim data-noescape>
+                            # Makefile
+                            vendor:
+                                composer install
+                        </code></pre>
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        <pre><code class="hljs shell" data-trim data-noescape>
+                            $ make vendor
+                            composer install
+                            Loading composer repositories with package information
+                            Installing dependencies (including require-dev) from lock file
+                            Warning: The lock file is not up to date with the latest changes in composer.json. You may be getting outdated dependencies. Run update to update them.
+                            Package operations: 36 installs, 0 updates, 0 removals
+                              - Installing pusher/pusher-php-server (v3.0.1): Loading from cache
+                              - Installing webmozart/assert (1.3.0): Loading from cache
+                              - Installing phpdocumentor/reflection-common (1.0.1): Loading from cache
+                              - Installing phpdocumentor/type-resolver (0.4.0): Loading from cache
+                              - Installing phpdocumentor/reflection-docblock (4.3.0): Loading from cache
+                              - Installing phpunit/php-token-stream (2.0.2): Loading from cache
+                              - Installing symfony/yaml (v4.0.6): Loading from cache
+                              - Installing sebastian/version (2.0.1): Loading from cache
+                              ...
+                        </code></pre>
+
+                        <pre><code class="hljs shell" data-trim data-noescape>
+                            $ make vendor
+                            make: `vendor' is up to date.
+                        </code></pre><!-- .element: class="fragment fade-in" -->
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        <pre><code class="hljs makefile" data-trim>
+                            cible: [prérequis]
+                                [recette]
+                                [...]
+                        </code></pre>
+                    </textarea>
+                </section>
+                <section>
+                        <pre><code class="hljs makefile" data-trim data-noescape>
+                            # Makefile
+                            vendor: composer.lock
+                                composer install
+                        </code></pre>
+
+                        <pre><code class="hljs shell" data-trim data-noescape>
+                            $ make vendor
+                            composer install
+                            Loading composer repositories with package information
+                            Installing dependencies (including require-dev) from lock file
+                            Package operations: 1 install, 1 update, 5 removals
+                            - Removing pusher/pusher-php-server (v3.0.1)
+                            - Removing webmozart/assert (1.3.0)
+                            - Removing phpdocumentor/reflection-common (1.0.1)
+                            - Removing phpdocumentor/type-resolver (0.4.0)
+                            - Removing phpdocumentor/reflection-docblock (4.3.0)
+                            - Installing phpunit/php-token-stream (2.1.2): Loading from cache
+                            - Updating symfony/yaml (v4.0.6 => v4.1): Loading from cache
+                            Generating autoload files
+                        </code></pre><!-- .element: class="fragment fade-in" -->
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Astuce
+                        <pre><code class="hljs makefile" data-trim>
+                            .DEFAULT_GOAL := help
+
+                            help:
+                                @grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST)| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
+
+                            .PHONY: help
+
+                            ##
+                            ## Project
+                            ## -------
+                            ##
+
+                            install: ## Install and start the Project
+                            install: vendor db
+                            ...
+                        </code></pre>
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        <pre><code class="hljs shell" data-trim>
+                            $ make
+                            Project
+                            -------
+
+                            install            Install and start the Project
+                            update             Update the Project
+
+                            Utils
+                            -----
+
+                            vendor             Install the vendor
+                            database           Reset the database
+                            migrate            Migrate the database
+                            new-migration      Generate a new migration
+                        </code></pre>
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### D'autres fonctionnalités
+
+                        1. <!-- .element: class="fragment fade-in" data-fragment-index="1" --> Variable d'environnement
+                        2. <!-- .element: class="fragment fade-in" data-fragment-index="2" --> Des instructions de condition, boucle
+                        3. <!-- .element: class="fragment fade-in" data-fragment-index="3" --> Sûrement d'autres fonctionnalités ...
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Avantage à l'utiliser
+
+                        - <!-- .element: class="fragment fade-in" data-fragment-index="1" --> Les développeurs utiliseront les même commandes => pas de risque d'oublier quelle commande pour faire quoi
+                        - <!-- .element: class="fragment fade-in" data-fragment-index="2" --> C'est un langage agnostique c'est à dire que nous pouvons lancer une commande php, js, docker etc...
+                        - <!-- .element: class="fragment fade-in" data-fragment-index="3" --> C'est intégré dans nos OS, par exemple l'autocomplétion fonctionne pour les différents cibles et même les options
+                        - <!-- .element: class="fragment fade-in" data-fragment-index="4" --> Nous pouvons l'utiliser pour le déploiement et même dans l'intégration continue
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Resources
+
+                        - [GNU Make | Documentation](https://www.gnu.org/software/make/manual/)
+                        - [Why you nedde a makefile on your project](https://blog.theodo.fr/2018/05/why-you-need-a-makefile-on-your-project/)
+                        - Slides
+                            - [Make is an actual task runner](https://speakerdeck.com/jubianchi/make-is-an-actual-task-runner)
+                            - [Outils pour améliorer la vie des développeurs symfony](https://speakerdeck.com/mykiwi/outils-pour-ameliorer-la-vie-des-developpeurs-symfony?slide=28)
+                            - [Self-Documented Makefile](https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html)
+                    </textarea>
+                </section>
+                <section data-background-image="https://media.giphy.com/media/lD76yTC5zxZPG/giphy.gif" data-markdown>
+                    <textarea data-template>
+                    </textarea>
+                </section>
+            </div>
+        </div>
+        <script src="node_modules/reveal.js/lib/js/head.min.js"></script>
+        <script src="node_modules/reveal.js/js/reveal.js"></script>
+        <script>
+            Reveal.initialize({
+                slideNumber: 'c/t',
+                dependencies: [
+                    // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
+                    {
+                        src: 'node_modules/reveal.js/lib/js/classList.js',
+                        condition: function() { return !document.body.classList; }
+                    },
+
+                    // Interpret Markdown in <section> elements
+                    {
+                        src: 'node_modules/reveal.js/plugin/markdown/marked.js',
+                        condition: function() { return !!document.querySelector( '[data-markdown]' ); }
+                    }, {
+                        src: 'node_modules/reveal.js/plugin/markdown/markdown.js',
+                        condition: function() { return !!document.querySelector( '[data-markdown]' ); }
+                    },
+
+                    // Syntax highlight for <code> elements
+                    {
+                        src: 'node_modules/reveal.js/plugin/highlight/highlight.js',
+                        async: true,
+                        callback: function() { hljs.initHighlightingOnLoad(); }
+                    }
+                ]
+            });
+        </script>
+    </body>
+</html>
