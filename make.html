@@ -48,6 +48,7 @@
                 </section>
                 <section data-markdown>
                     <textarea data-template>
+                        ### Exemple : Installation
                         <pre><code class="hljs makefile" data-trim data-noescape>
                             # Makefile
                             vendor:
@@ -115,7 +116,28 @@
                 </section>
                 <section data-markdown>
                     <textarea data-template>
-                        ### Astuce
+                        ### Dépendance des cibles
+                        <pre><code class="hljs makefile" data-trim>
+                            install: vendor database
+                            update: vendor migrate
+                            .PHONY: install update
+
+                            vendor: composer.lock
+                                composer install
+
+                            database: vendor
+                                app/console doctrine:database:drop --if-exists --force
+                                app/console doctrine:database:create --if-not-exists
+                                app/console doctrine:schema:create
+
+                            migrate: vendor
+                                app/console doctrine:database:migrate -n
+                        </code></pre>
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Astuce : `Make help`
                         <pre><code class="hljs makefile" data-trim>
                             .DEFAULT_GOAL := help
 
@@ -137,6 +159,7 @@
                 </section>
                 <section data-markdown>
                     <textarea data-template>
+                        ### Astuce : `Make help`
                         <pre><code class="hljs shell" data-trim>
                             $ make
                             Project
