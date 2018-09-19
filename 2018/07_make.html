@@ -1,15 +1,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css" />
-        <link rel="stylesheet" href="node_modules/reveal.js/css/theme/solarized.css" />
-        <link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css" />
+        <link rel="stylesheet" href="../node_modules/reveal.js/css/reveal.css" />
+        <link rel="stylesheet" href="../node_modules/reveal.js/css/theme/solarized.css" />
+        <link rel="stylesheet" href="../node_modules/reveal.js/lib/css/zenburn.css" />
     </head>
     <body>
         <div class="reveal">
             <div class="slides">
                 <section data-markdown>
                     ## Make
+
+                    ### Creads - 07/2018
                 </section>
                 <section data-markdown>
                     <textarea data-template>
@@ -217,30 +219,30 @@
                 </section>
             </div>
         </div>
-        <script src="node_modules/reveal.js/lib/js/head.min.js"></script>
-        <script src="node_modules/reveal.js/js/reveal.js"></script>
+        <script src="../node_modules/reveal.js/lib/js/head.min.js"></script>
+        <script src="../node_modules/reveal.js/js/reveal.js"></script>
         <script>
             Reveal.initialize({
                 slideNumber: 'c/t',
                 dependencies: [
                     // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
                     {
-                        src: 'node_modules/reveal.js/lib/js/classList.js',
+                        src: '../node_modules/reveal.js/lib/js/classList.js',
                         condition: function() { return !document.body.classList; }
                     },
 
                     // Interpret Markdown in <section> elements
                     {
-                        src: 'node_modules/reveal.js/plugin/markdown/marked.js',
+                        src: '../node_modules/reveal.js/plugin/markdown/marked.js',
                         condition: function() { return !!document.querySelector( '[data-markdown]' ); }
                     }, {
-                        src: 'node_modules/reveal.js/plugin/markdown/markdown.js',
+                        src: '../node_modules/reveal.js/plugin/markdown/markdown.js',
                         condition: function() { return !!document.querySelector( '[data-markdown]' ); }
                     },
 
                     // Syntax highlight for <code> elements
                     {
-                        src: 'node_modules/reveal.js/plugin/highlight/highlight.js',
+                        src: '../node_modules/reveal.js/plugin/highlight/highlight.js',
                         async: true,
                         callback: function() { hljs.initHighlightingOnLoad(); }
                     }

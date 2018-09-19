@@ -1,0 +1,363 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../node_modules/reveal.js/css/reveal.css" />
+    <link rel="stylesheet" href="../node_modules/reveal.js/css/theme/solarized.css" />
+    <link rel="stylesheet" href="../node_modules/reveal.js/lib/css/zenburn.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown>
+          ## Commande avec du style
+
+          ### Creads - 21/09/2018
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            Nombre de commandes sans aucun message
+
+            - <!-- .element: class="fragment fade-in" --> Aucune info de l'état de la commande
+            - <!-- .element: class="fragment fade-in" --> Commande bloquée ?
+            - <!-- .element: class="fragment fade-in" --> Commande qui tourne à l'infini ?
+            - <!-- .element: class="fragment fade-in" --> Y a-t-il des erreurs ?
+
+            <!-- .element: class="fragment fade-in" -->Symfony propose 2 façons d'afficher les informations de la console
+          </textarea>
+        </section>
+        <section>
+          <section data-markdown>
+            <textarea data-template>
+              ## Output
+
+              `OutputInterface::writeln()`
+
+              Il affiche le message brut
+            </textarea>
+          </section>
+          <section>
+            <pre><code class="hljs php" data-trim>
+              $output->writeln(
+                'Titre',
+                '=====',
+                ''
+              );
+            </code></pre>
+            <pre class="fragment fade-in"><code class="hljs shell" data-trim>
+              $ app/console command:style
+              Titre
+              =====
+              
+              $
+            </code></pre>
+          </section>
+          <section data-markdown>
+              <textarea data-template>
+                Nous pouvons coloriser avec les balises suivantes
+
+                - <!-- .element: class="fragment fade-in" --> `<info>`
+                - <!-- .element: class="fragment fade-in" --> `<comment>`
+                - <!-- .element: class="fragment fade-in" --> `<question>`
+                - <!-- .element: class="fragment fade-in" --> `<error>`
+
+                <pre class="fragment fade-in"><code class="hljs php" data-trim>
+                  $output->writeln('<info>message</info>');
+                  $output->writeln('<comment>Commentaire</comment>');
+                  $output->writeln('<question>Question</question>');
+                  $output->writeln('<error>Erreur</error>');
+                </code></pre>
+
+                <!-- .element: class="fragment fade-in" --> Nous pouvons aussi personaliser la colorisation
+              </textarea>
+            </section>
+            <section data-markdown>
+              <textarea data-template>
+                Symfony propose aussi des helpers
+
+                - <!-- .element: class="fragment fade-in" --> Question
+                - <!-- .element: class="fragment fade-in" --> Formatter
+                - <!-- .element: class="fragment fade-in" --> Progress bar
+                - <!-- .element: class="fragment fade-in" --> Table
+              </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                  C'est bien tout ça mais bon c'est une perte de temps de coder tout ça pour chaque commande...
+
+                  <img src="https://media.giphy.com/media/hmpqVzwPARTmo/giphy.gif" alt="">
+                </textarea>
+              </section>
+        </section>
+        <section>
+          <section data-markdown>
+            <textarea data-template>
+              ## SymfonyStyle
+              
+              C'est une classe offrant les méthodes facilitant l'affichage de la console
+
+              <pre><code class="hljs php">
+                use Symfony\Component\Console\Style\SymfonyStyle;
+                
+                $io = new SymfonyStyle();
+              </code></pre>
+            </textarea>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+              ### Contenu 
+              - Titre
+              
+              <pre><code class="hljs php" data-trim>
+              $io->title();
+              </code></pre>
+
+              - Section
+              
+              <pre><code class="hljs php" data-trim>
+              $io->section();
+              </code></pre>
+            </textarea>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+              ### Contenu 
+
+              - Texte
+              
+              <pre><code class="hljs php" data-trim>
+              $io->text();
+              $io->text([
+                'Long',
+                'Texte',
+              ]);
+              </code></pre>
+
+              - Liste
+              
+              <pre><code class="hljs php" data-trim>
+              $io->listing([
+                'Element 1',
+                'Element 2',
+                'Element 3',
+              ]);
+              </code></pre>
+            </textarea>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+              ### Contenu
+
+              - Tableau
+              
+              <pre><code class="hljs php" data-trim>
+                $io->table(
+                  ['header 1', 'header 2'], 
+                  [
+                    ['Cell 1-1', 'Cell 1-2'], 
+                    ['Cell 2-1', 'Cell 2-2'],
+                    ['Cell 3-1', 'Cell 3-2'],
+                  ]
+                );
+              </code></pre>
+
+              - Nouvelle ligne
+
+              <pre><code class="hljs php" data-trim>
+                $io->newLine();
+                $io->newLine(3);
+              </code></pre>
+            </textarea>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+                ### Contenu
+
+                - Note
+                
+                <pre><code class="hljs php" data-trim>
+                $io->note('Lorem ipsum dolor sit amet consectetur adipiscing');
+                $io->note([
+                  'Lorem ipsum dolor sit amet',
+                  'Consectetur adipiscing elit',
+                  'Pretium aenean fermentum donec vitae per nascetur sociosqu',
+                ]);
+                </code></pre>
+  
+                - Caution
+  
+                <pre><code class="hljs php" data-trim>
+                $io->caution('Lorem ipsum dolor sit amet consectetur adipiscing');
+                $io->caution([
+                  'Lorem ipsum dolor sit amet',
+                  'Consectetur adipiscing elit',
+                  'Pretium aenean fermentum donec vitae per nascetur sociosqu',
+                ]);
+                </code></pre>
+            </textarea>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+              ### Barre de progression
+
+              <pre><code class="hljs php" data-trim>
+              // Affiche la barre de progression de longueur inconnue
+              $io->progressStart();
+              // Affiche la barre de progression d'une longueur de 100 étapes 
+              $io->progressStart(100);
+
+              // Avance la barre de progression de 1 étape
+              $io->progressAdvance();
+              // Avance la barre de progression de 10 étapes
+              $io->progressAdvance(10);
+
+              // Finit la barre de progression en remplissant le reste de la barre de progression
+              $io->progressFinish();
+              </code></pre>
+            </textarea>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+              ### Interaction
+
+              - Question
+
+              <pre><code class="hljs php" data-trim>
+              $io->ask('Question');
+              // Avec une valeur par défaut
+              $io->ask('Question', 'Réponse par défaut');
+              // Validation de la réponse
+              $io->ask('Nombre', 1, function ($number) {
+                if (!is_numeric($number)) {
+                  throw new \RuntimeException('Tu dois donner un nombre');
+                }
+
+                return (int) $number;
+              });
+              </code></pre>
+            </textarea>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+              ### Interaction
+
+              - Question avec une réponse cachée (idéal pour demander le mot de passe)
+
+              <pre><code class="hljs php" data-trim>
+                $io->askHidden('Votre mot de passe');
+                // Valider la réponse
+                $io->askHidden('Votre mot de passe', function ($password) {...});
+              </code></pre>
+
+              - Confirmation
+
+              <pre><code class="hljs php" data-trim>
+              $io->confirm('Recommencer ?');
+              // Avec une valeur par défaut
+              $io->confirm('Recommencer ?', true);
+              </code></pre>
+            </textarea>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+              ### Interaction
+
+              - Choix
+
+              <pre><code class="hljs php" data-trim>
+                $io->choice('Choisir', ['choix 1', 'choix 2', ...]);
+                // Avec valeur par défaut
+                $io->choice('Choisir', ['choix 1', 'choix 2', 'choix 3'], 'choix 3');
+              </code></pre>
+            </textarea>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+            ### Résultat
+
+            - Succès
+
+            <pre><code class="hljs php" data-trim>
+            $io->success('Succès');
+            // Long message
+            $io->success([
+              'Long',
+              'Message'
+            ]);
+            </code></pre>
+
+            - Avertissement
+
+            <pre><code class="hljs php" data-trim>
+            $io->warning('Succès');
+            // Long message
+            $io->warning([
+              'Long',
+              'Message'
+            ]);
+            </code></pre>
+            </textarea>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+              ### Résultat
+
+              - Erreur
+
+              <pre><code class="hljs php" data-trim>
+              $io->error('Succès');
+              // Long message
+              $io->error([
+                'Long',
+                'Message'
+              ]);
+              </code></pre>
+            </textarea>
+          </section>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            ## Resources
+
+            - [Symfony - Console](https://symfony.com/doc/3.4/console.html)
+            - [Symfony - Console - Colorisation](https://symfony.com/doc/3.4/console/coloring.html)
+            - [Symfony - Console - Style](https://symfony.com/doc/3.4/console/style.html)
+          </textarea>
+        </section>
+        <section data-background-image="https://media.giphy.com/media/lD76yTC5zxZPG/giphy.gif" data-markdown>
+          <textarea data-template>
+          </textarea>
+        </section>
+      </div>
+    </div>
+    <script src="../node_modules/reveal.js/lib/js/head.min.js"></script>
+    <script src="../node_modules/reveal.js/js/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        slideNumber: 'c/t',
+        dependencies: [
+          // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
+          {
+            src: '../node_modules/reveal.js/lib/js/classList.js',
+            condition: function() { return !document.body.classList; }
+          },
+
+          // Interpret Markdown in <section> elements
+          {
+            src: '../node_modules/reveal.js/plugin/markdown/marked.js',
+            condition: function() { return !!document.querySelector( '[data-markdown]' ); }
+          }, {
+            src: '../node_modules/reveal.js/plugin/markdown/markdown.js',
+            condition: function() { return !!document.querySelector( '[data-markdown]' ); }
+          },
+
+          // Syntax highlight for <code> elements
+          {
+            src: '../node_modules/reveal.js/plugin/highlight/highlight.js',
+            async: true,
+            callback: function() { hljs.initHighlightingOnLoad(); }
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
