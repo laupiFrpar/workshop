@@ -13,7 +13,8 @@
 
           ## Creads - 21/09/2018
         </section>
-        <section data-markdown><script type="text/template">
+        <section data-markdown>
+          <script type="text/template">
             ### Demo
 
             ```js
@@ -22,7 +23,13 @@
             ```
             <p class="fragment" data-code-focus="1">This focuses on the comment.</p>
             <p class="fragment" data-code-focus="1-2">Another fragment.</p>
-          </script></section>
+          </script>
+        </section>
+        <section>
+            <pre><code class="lang-php hljs">
+                echo "Hello World !";
+            </code></pre>
+        </section>
       </div>
     </div>
     <script src="../node_modules/reveal.js/lib/js/head.min.js"></script>
@@ -42,6 +49,7 @@
           { src: '../node_modules/highlight.js/lib/highlight.js' },
           {
               src: '../node_modules/reveal-code-focus/reveal-code-focus.js',
+              async: true,
               callback: function() { RevealCodeFocus(); }
           }
         ]
