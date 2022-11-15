@@ -9,6 +9,6 @@
   "private": true,
   "dependencies": {
     "reveal-code-focus": "^1.0.0",
-    "reveal.js": "^3.6.0"
+    "reveal.js": "^4.3.0"
   }
 }

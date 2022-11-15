@@ -7,7 +7,7 @@ reveal-code-focus@^1.0.0:
   resolved "https://registry.yarnpkg.com/reveal-code-focus/-/reveal-code-focus-1.0.0.tgz#817b924c7c2241cfd5a2d70730f0ccaaf9bde056"
   integrity sha1-gXuSTHwiQc/VotcHMPDMqvm94FY=
 
-reveal.js@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/reveal.js/-/reveal.js-3.6.0.tgz#ce0e64f30cbebd6e5ce885c2f384085c5e5821e8"
-  integrity sha512-ZhXBWoDiaNySAJgs3XqmkHTmjR3Dkkhyy89VY8PLzXBDwNhP7ZEGtBT1H3xJRCEGOD4ScLJBbU75PRiPLQgWgw==
+reveal.js@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/reveal.js/-/reveal.js-4.3.0.tgz#6fe91cc84de2e286f039545cb596dbc4d0d52294"
+  integrity sha512-KzZxJjj1gmxVNyplY6g9MiGwtDvZJiYkMvG1Qmaita7vWT/8eoTEK+RuIPLvxDeyxOtTz56u2wrOETVO79qL4A==
